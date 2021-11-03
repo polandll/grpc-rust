@@ -8,13 +8,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut client = StargateClient::builder()
 
     // Set connect information for STARGATE OSS running in docker container
-    //.uri("http://localhost:8090/")?                           // replace with a proper address
-    //.auth_token(AuthToken::from_str("0e571c63-a151-42ca-8100-6680409433d0")?)    // replace with a proper token
+    .uri("http://localhost:8090/")?                           // replace with a proper address
+    .auth_token(AuthToken::from_str("502268f2-527e-459d-83ff-44463ede2ad4")?)    // replace with a proper token
 
     // Set connect information for ASTRA DBaaS
-    .uri("https://a2b4465c-e7a4-4cb7-a4a4-c829f0ef10d6-us-west1.apps.astra.datastax.com/stargate")?
-    .auth_token(AuthToken::from_str("AstraCS:uuwizlOZhGxrUxaOqHPLAGCK:b4296e99a9f801d78043272b0efd79dca115b1fd95765780df36ed3ada87ff9b")?)                                         
-    .tls(Some(client::default_tls_config()?))   // optional
+    // .uri("https://a2b4465c-e7a4-4cb7-a4a4-c829f0ef10d6-us-west1.apps.astra.datastax.com/stargate")?
+    // .auth_token(AuthToken::from_str("AstraCS:uuwizlOZhGxrUxaOqHPLAGCK:b4296e99a9f801d78043272b0efd79dca115b1fd95765780df36ed3ada87ff9b")?)                                         
+    // .tls(Some(client::default_tls_config()?))   // optional
     
     .connect()
     .await?;
@@ -28,7 +28,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Create a table
     let create_table = Query::builder()
-        //.keyspace("test")
+        // .keyspace("test")
         .query(
             "CREATE TABLE IF NOT EXISTS test.users \
                 (firstname text, lastname text, PRIMARY KEY (firstname, lastname));",
@@ -37,16 +37,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Insert some rows/records
     let batch = Batch::builder()
-        //.keyspace("test")                   // set the keyspace the query applies to
-        //.consistency(Consistency::One)      // set consistency level
+        .keyspace("test")                   // set the keyspace the query applies to
+        .consistency(Consistency::One)      // set consistency level
         .query("INSERT INTO test.users (firstname, lastname) VALUES ('Lorina', 'Poland');") 
         .query("INSERT INTO test.users (firstname, lastname) VALUES ('Ronnie', 'Miller');")               
         .build();
 
     // Select/query some data from the keyspace.table
     let query = Query::builder()
-        //.keyspace("test") 
-        //.consistency(Consistency::One) 
+        .keyspace("test") 
+        .consistency(Consistency::One) 
         .query("SELECT firstname, lastname FROM test.users;")               
         .build();  
 
