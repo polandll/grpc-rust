@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "../docker-examples/cass4-sg-zepp"
+		},		
+		{
+			"path": "../stargate/docker-images"
+		},
+		{
+			"path": "."
+		},
+
+		{
+			"path": "../grpc-go"
+		},
+		{
+			"path": "../grpc-node"
+		},
+		{
+			"path": "../grpc-java"
+		}
+	],
+	"settings": {}
+}
