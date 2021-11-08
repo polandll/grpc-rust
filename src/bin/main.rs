@@ -14,8 +14,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .auth_token(AuthToken::from_str("721e9c04-e121-4bf4-b9a6-887ebeae2bc5")?)    // replace with a proper token
 
     // For Astra DB, set connect information:
-    // .uri("https://a2b4465c-e7a4-4cb7-a4a4-c829f0ef10d6-us-west1.apps.astra.datastax.com/stargate")?
-    // .auth_token(AuthToken::from_str("AstraCS:uuwizlOZhGxrUxaOqHPLAGCK:b4296e99a9f801d78043272b0efd79dca115b1fd95765780df36ed3ada87ff9b")?)                                         
+    // .uri("https://$ASTRA_CLUSTER_ID-$ASTRA_REGION.apps.astra.datastax.com/stargate")?
+    // .auth_token(AuthToken::from_str("AstraCS:xxxxx")?)                                         
     // .tls(Some(client::default_tls_config()?))   // optional
     
     .connect()

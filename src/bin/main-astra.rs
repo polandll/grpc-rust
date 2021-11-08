@@ -10,8 +10,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut client = StargateClient::builder()
 
     // For Astra DB, set connect information:
-    .uri("https://0ba933af-90c2-46e9-887a-a387ba75411b-westus2.apps.astra-dev.datastax.com/stargate")?
-    .auth_token(AuthToken::from_str("AstraCS:YUskXkABjYztQJfTHNkOGHOI:09fa16889d7217b23b3854d3b2858a17b895ec272494a1539e47200b87567f26")?)                                         
+    // .uri("https://$ASTRA_CLUSTER_ID-$ASTRA_REGION.apps.astra.datastax.com/stargate")?
+    // .auth_token(AuthToken::from_str("AstraCS:xxxxx")?)                                         
     .tls(Some(client::default_tls_config()?))   // optional
     
     .connect()
