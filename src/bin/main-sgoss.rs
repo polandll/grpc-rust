@@ -1,17 +1,19 @@
-use std::error::Error;
-use std::str::FromStr;
-use std::convert::TryInto;
 use stargate_grpc::*;
+use std::str::FromStr;
+use std::error::Error;
+use std::convert::TryInto;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
 
-    // For Stargate OSS: create A client
+    // Set the Stargate OSS configuration for a locally running docker container:
+    let sg_uri = "http://localhost:8090/";
+    let auth_token = "06251024-5aeb-4200-a132-5336e73e5b6e";
+    
+    // For Stargate OSS: create a client
     let mut client = StargateClient::builder()
-
-    // For Stargate OSS running locally in docker container, set connect information:
-    .uri("http://localhost:8090/")?                           // replace with a proper address
-    .auth_token(AuthToken::from_str("721e9c04-e121-4bf4-b9a6-887ebeae2bc5")?)    // replace with a proper token  
+    .uri(sg_uri)?
+    .auth_token(AuthToken::from_str(auth_token)?)  
     .connect()
     .await?;
 
@@ -42,8 +44,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let batch = Batch::builder()
         .keyspace("test")                   // set the keyspace the query applies to
         .consistency(Consistency::One)      // set consistency level
-        .query("INSERT INTO test.users (firstname, lastname) VALUES ('Lorina', 'Poland');") 
-        .query("INSERT INTO test.users (firstname, lastname) VALUES ('Doug', 'Wettlaufer');")               
+        .query("INSERT INTO test.users (firstname, lastname) VALUES ('Jane', 'Doe');") 
+        .query("INSERT INTO test.users (firstname, lastname) VALUES ('Serge', 'Provencio');")               
         .build();
     client.execute_batch(batch).await?;
 

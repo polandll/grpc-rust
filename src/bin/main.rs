@@ -1,21 +1,28 @@
-use std::error::Error;
-use std::str::FromStr;
-use std::convert::TryInto;
 use stargate_grpc::*;
+use std::str::FromStr;
+use std::error::Error;
+use std::convert::TryInto;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+
+    // Set the Stargate OSS configuration for a locally running docker container:
+    let sg_uri = "http://localhost:8090/";
+    let auth_token = "06251024-5aeb-4200-a132-5336e73e5b6e";
+    // Set the Astra DB connect information:
+    let astra_uri = "https://$ASTRA_CLUSTER_ID-$ASTRA_REGION.apps.astra.datastax.com/stargate";
+    let bearer_token = "AstraCS:xxxxx";
 
     // For Stargate OSS and Astra DB, create client:
     let mut client = StargateClient::builder()
 
     // For Stargate OSS running locally in docker container, set connect information:
-    .uri("http://localhost:8090/")?                           // replace with a proper address
-    .auth_token(AuthToken::from_str("721e9c04-e121-4bf4-b9a6-887ebeae2bc5")?)    // replace with a proper token
+    .uri(sg_uri)?
+    .auth_token(AuthToken::from_str(auth_token)?)
 
     // For Astra DB, set connect information:
-    // .uri("https://$ASTRA_CLUSTER_ID-$ASTRA_REGION.apps.astra.datastax.com/stargate")?
-    // .auth_token(AuthToken::from_str("AstraCS:xxxxx")?)                                         
+    // .uri(astra_uri)?
+    // .auth_token(AuthToken::from_str(bearer_token)?)                                         
     // .tls(Some(client::default_tls_config()?))   // optional
     
     .connect()
